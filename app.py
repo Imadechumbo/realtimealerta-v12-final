@@ -486,12 +486,54 @@ def fetch_earthquakes():
 # =========================
 # AI LAYER
 # =========================
+def local_analyst_fallback(prompt: str, reason: str | None = None) -> str:
+    lower = (prompt or '').lower()
+
+    contexto = 'Há monitoramento reforçado, com leitura conservadora e foco em vetores de escalada, logística e impacto regional.'
+    risco = 'Risco moderado, com possibilidade de deterioração rápida se houver novo incidente militar, diplomático ou cibernético.'
+    vetores = 'Vetores principais: desinformação, pressão econômica, movimentação militar, ataques cibernéticos e incidentes em infraestrutura crítica.'
+    impactos = 'Impactos potenciais: volatilidade em energia, comércio, cadeias logísticas, seguros, câmbio e percepção de risco internacional.'
+
+    if any(k in lower for k in ['china', 'eua', 'taiwan', 'mar do sul', 'indo-pacífico']):
+        contexto = 'O eixo China-EUA segue como principal foco sistêmico, com Taiwan e o Indo-Pacífico como zonas sensíveis de dissuasão, pressão naval e competição tecnológica.'
+        risco = 'Risco elevado de incidente localizado, mas sem indicação automática de guerra aberta no curtíssimo prazo.'
+        vetores = 'Vetores principais: exercícios militares, sanções, semicondutores, bloqueio parcial, pressão naval e erro de cálculo entre forças destacadas.'
+        impactos = 'Impactos potenciais: chips, transporte marítimo, seguro global, cadeias industriais e reprecificação de ativos de risco.'
+    elif any(k in lower for k in ['rússia', 'russia', 'ucrânia', 'ucrania', 'otan', 'europa']):
+        contexto = 'O teatro europeu continua marcado por desgaste prolongado, drones, pressão sobre defesa aérea e sensibilidade política entre OTAN, Rússia e fronteiras do leste.'
+        risco = 'Risco alto de escalada localizada e ataques de saturação, mas sem sinal conclusivo de expansão imediata para guerra continental.'
+        vetores = 'Vetores principais: drones de longo alcance, logística militar, energia, munição, sabotagem e pressão política interna.'
+        impactos = 'Impactos potenciais: energia, alimentos, fertilizantes, frete, orçamento de defesa e estabilidade política regional.'
+    elif any(k in lower for k in ['iran', 'israel', 'hormuz', 'mar vermelho', 'oriente médio', 'oriente medio']):
+        contexto = 'O Oriente Médio segue com forte sensibilidade estratégica por causa de rotas marítimas, energia, proxies armados e risco de arrasto regional.'
+        risco = 'Risco alto de choque logístico e de energia, especialmente se houver ataque a rotas, refinarias, portos ou infraestrutura crítica.'
+        vetores = 'Vetores principais: Hormuz, Mar Vermelho, drones, mísseis, retaliação indireta e pressão sobre aliados.'
+        impactos = 'Impactos potenciais: petróleo, gás, seguro marítimo, frete, inflação internacional e cadeias de suprimento.'
+    elif any(k in lower for k in ['ciber', 'hacker', 'ransomware', 'infraestrutura', 'hospital', 'energia', 'apagão', 'apagao']):
+        contexto = 'A frente cibernética continua assimétrica, barata e escalável, com capacidade de causar disrupção sem confronto militar clássico.'
+        risco = 'Risco elevado para infraestrutura crítica e serviços essenciais, sobretudo onde há baixa resiliência operacional.'
+        vetores = 'Vetores principais: ransomware, intrusão em cadeias de fornecedores, sabotagem discreta, vazamento de dados e ataques oportunistas.'
+        impactos = 'Impactos potenciais: hospitais, telecom, energia, logística, confiança pública e custos regulatórios.'
+
+    linhas = [
+        'Contexto: ' + contexto,
+        'Risco: ' + risco,
+        'Vetores de escalada: ' + vetores,
+        'Impactos: ' + impactos,
+        'Leitura operacional: manter monitoramento contínuo, validar fontes e evitar extrapolação sem novo fato confirmatório.'
+    ]
+
+    if reason:
+        linhas.append('Observação técnica: a resposta foi entregue pelo modo local de contingência porque a IA avançada ficou temporariamente indisponível.')
+
+    return '
+
+'.join(linhas)
+
+
 def ai_answer(prompt: str) -> str:
     if not model:
-        return (
-            'Analista Sênior em modo local de contingência. '
-            'A IA avançada está temporariamente indisponível, mas o terminal segue ativo para leitura heurística do cenário.'
-        )
+        return local_analyst_fallback(prompt, 'model_unavailable')
 
     system_prompt = f'''
 Você é o Analista Sênior IA do Real Time Journal.
@@ -506,12 +548,9 @@ Pergunta do usuário: {prompt}
         if text and text.strip():
             return text.strip()
     except Exception:
-        pass
+        return local_analyst_fallback(prompt, 'gemini_exception')
 
-    return (
-        'A análise avançada não respondeu a tempo. Considere o cenário como de monitoramento reforçado, '
-        'com foco em escalada regional, risco logístico e impactos indiretos.'
-    )
+    return local_analyst_fallback(prompt, 'empty_response')
 
 
 def conservative_blend_score(base_value, ai_value, ai_weight=0.18, max_delta=12):
