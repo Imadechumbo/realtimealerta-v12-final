@@ -4,6 +4,7 @@ import json
 import html
 import re
 import threading
+import logging
 import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
@@ -24,6 +25,9 @@ except Exception:
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app)
 
+logging.basicConfig(level=os.environ.get('LOG_LEVEL', 'INFO'))
+logger = logging.getLogger('realtimealerta')
+
 # =========================
 # CONFIG
 # =========================
@@ -31,6 +35,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
 GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-1.5-flash")
 HTTP_TIMEOUT = int(os.environ.get("HTTP_TIMEOUT", 10))
 AI_TIMEOUT = int(os.environ.get("AI_TIMEOUT", 22))
+AI_MAX_RETRIES = int(os.environ.get("AI_MAX_RETRIES", 2))
 CACHE_TTL_SECONDS = int(os.environ.get("CACHE_TTL_SECONDS", 240))
 USER_AGENT = "RealTimeJournal/2.0 (+https://www.realtimealerta.com.br)"
 
@@ -269,10 +274,19 @@ cache_store = {
 model = None
 if GEMINI_API_KEY and genai is not None:
     try:
+        logger.info('Inicializando Gemini | model=%s | key_present=%s', GEMINI_MODEL, bool(GEMINI_API_KEY))
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel(GEMINI_MODEL)
-    except Exception:
+        logger.info('Gemini inicializado com sucesso')
+    except Exception as e:
+        logger.exception('Erro ao inicializar Gemini: %r', e)
         model = None
+else:
+    logger.warning(
+        'Gemini indisponível na inicialização | key_present=%s | genai_imported=%s',
+        bool(GEMINI_API_KEY),
+        genai is not None,
+    )
 
 # =========================
 # HELPERS
@@ -523,16 +537,16 @@ def local_analyst_fallback(prompt: str, reason: str | None = None) -> str:
         'Leitura operacional: manter monitoramento contínuo, validar fontes e evitar extrapolação sem novo fato confirmatório.'
     ]
 
-    if reason:
+    if reason and os.environ.get('SHOW_AI_FALLBACK_REASON', '0') == '1':
         linhas.append('Observação técnica: a resposta foi entregue pelo modo local de contingência porque a IA avançada ficou temporariamente indisponível.')
 
-    return '
+    return "\n".join(linhas)
 
-'.join(linhas)
 
 
 def ai_answer(prompt: str) -> str:
     if not model:
+        logger.warning('Fallback local acionado | reason=model_unavailable | prompt=%s', (prompt or '')[:120])
         return local_analyst_fallback(prompt, 'model_unavailable')
 
     system_prompt = f'''
@@ -542,15 +556,27 @@ Seja objetivo, analítico, claro e sem sensacionalismo.
 Aponte: contexto, risco, vetores de escalada, impactos regionais e globais.
 Pergunta do usuário: {prompt}
 '''
-    try:
-        result = model.generate_content(system_prompt)
-        text = getattr(result, 'text', None)
-        if text and text.strip():
-            return text.strip()
-    except Exception:
-        return local_analyst_fallback(prompt, 'gemini_exception')
 
-    return local_analyst_fallback(prompt, 'empty_response')
+    last_error = None
+    for attempt in range(1, AI_MAX_RETRIES + 1):
+        try:
+            result = run_with_timeout(model.generate_content, AI_TIMEOUT, system_prompt)
+            if result is None:
+                last_error = 'timeout'
+                logger.warning('Gemini timeout | attempt=%s/%s', attempt, AI_MAX_RETRIES)
+                continue
+            text = getattr(result, 'text', None)
+            if text and text.strip():
+                logger.info('Gemini respondeu com sucesso | attempt=%s/%s', attempt, AI_MAX_RETRIES)
+                return text.strip()
+            last_error = 'empty_response'
+            logger.warning('Gemini resposta vazia | attempt=%s/%s', attempt, AI_MAX_RETRIES)
+        except Exception as e:
+            last_error = repr(e)
+            logger.exception('Erro no generate_content | attempt=%s/%s | error=%r', attempt, AI_MAX_RETRIES, e)
+
+    logger.warning('Fallback local acionado | reason=%s | prompt=%s', last_error or 'unknown', (prompt or '')[:120])
+    return local_analyst_fallback(prompt, str(last_error or 'gemini_exception'))
 
 
 def conservative_blend_score(base_value, ai_value, ai_weight=0.18, max_delta=12):
@@ -636,7 +662,8 @@ Eventos:
             if cleaned:
                 base_summary['hotspots'] = cleaned
         return base_summary
-    except Exception:
+    except Exception as e:
+        logger.exception('Erro no enriquecimento de resumo por IA: %r', e)
         return base_summary
 
 

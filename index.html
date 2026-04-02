@@ -1549,11 +1549,13 @@
             top: 96px;
             right: 24px;
             z-index: 2000;
-            width: 420px;
-            height: 620px;
+            width: 360px;
+            height: 500px;
+            max-height: 70vh;
             background: #111827;
             border: 4px solid #000;
             box-shadow: 15px 15px 0 #000;
+            border-radius: 10px;
             display: none;
             flex-direction: column;
             overflow: hidden;
@@ -1566,7 +1568,7 @@
         .chat-header {
             background: linear-gradient(180deg, #000 0%, #111 100%);
             color: #fff;
-            padding: 16px;
+            padding: 12px 14px;
             border-bottom: 4px solid #000;
             display: flex;
             justify-content: space-between;
@@ -1575,7 +1577,7 @@
 
         .chat-header h4 {
             margin: 0;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -1583,7 +1585,7 @@
 
         .chat-header p {
             margin: 4px 0 0;
-            font-size: 10px;
+            font-size: 9px;
             color: #f97316;
             font-weight: 700;
             text-transform: uppercase;
@@ -1596,51 +1598,51 @@
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         #chat-messages {
             flex: 1;
-            padding: 16px;
+            padding: 12px;
             overflow-y: auto;
             background: #0b1220;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            font-size: 14px;
+            gap: 10px;
+            font-size: 13px;
             color: #e5e7eb;
         }
 
         .msg-system {
             background: #111827;
             color: #f9fafb;
-            padding: 12px;
+            padding: 10px 11px;
             border-left: 4px solid #ef4444;
-            line-height: 1.6;
-            font-size: 14px;
+            line-height: 1.55;
+            font-size: 12px;
         }
 
         .msg-user {
             background: #1f2937;
             color: #f9fafb;
-            padding: 12px;
+            padding: 10px 11px;
             border-right: 4px solid #f59e0b;
             text-align: right;
             font-style: normal;
             font-weight: 700;
-            line-height: 1.6;
-            font-size: 14px;
+            line-height: 1.55;
+            font-size: 12px;
         }
 
         .msg-ai {
             background: #ffffff !important;
             color: #111827 !important;
-            padding: 14px;
+            padding: 12px;
             border-left: 4px solid #000;
             box-shadow: 0 2px 8px rgba(0,0,0,0.12);
             white-space: pre-wrap;
-            line-height: 1.7;
-            font-size: 14px;
+            line-height: 1.62;
+            font-size: 13px;
             font-weight: 500;
             word-break: break-word;
         }
@@ -1654,7 +1656,7 @@
         }
 
         .chat-input-row {
-            padding: 12px;
+            padding: 10px;
             border-top: 4px solid #000;
             background: #111827;
             display: flex;
@@ -1664,8 +1666,8 @@
 
         #user-input {
             flex: 1;
-            padding: 12px;
-            font-size: 13px;
+            padding: 10px;
+            font-size: 12px;
             font-weight: 700;
             outline: none;
             border: 2px solid #374151;
@@ -1684,13 +1686,13 @@
         }
 
         .chat-send {
-            min-width: 48px;
-            height: 48px;
+            min-width: 42px;
+            height: 42px;
             border: 2px solid #000;
             background: #dc2626;
             color: #fff;
             font-weight: 900;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
         }
 
@@ -1706,6 +1708,23 @@
 
         .msg-ai b {
             color: #b91c1c !important;
+        }
+
+        #chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #chat-messages::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.04);
+        }
+
+        #chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(239,68,68,0.75);
+            border-radius: 999px;
+        }
+
+        #chat-messages::-webkit-scrollbar-thumb:hover {
+            background: rgba(239,68,68,0.95);
         }
 
         .leaflet-popup-content-wrapper {
@@ -2384,7 +2403,8 @@
                 left: 12px;
                 width: auto;
                 top: 136px;
-                height: 58vh;
+                height: 52vh;
+                max-height: 52vh;
             }
 
             .timeline {
