@@ -1164,13 +1164,13 @@ def home():
 @app.route('/analise/<slug>.html')
 def analysis_page(slug):
     page = ANALYSIS_BY_SLUG.get(slug)
-    if not page:
-        return send_from_directory('.', 'index.html'), 404
-    file_path = page['file']
+    file_path = page['file'] if page else os.path.join('analise', f'{slug}.html')
     if not os.path.exists(file_path):
         return send_from_directory('.', 'index.html'), 404
     raw_html = open(file_path, 'r', encoding='utf-8').read()
-    final_html = inject_seo_into_html(raw_html, request.url, page.get('title', slug), page.get('description', 'Análise estratégica do Real Time Journal.'))
+    title = page.get('title', slug) if page else slug.replace('-', ' ').title()
+    description = page.get('description', 'Análise estratégica do Real Time Journal.') if page else 'Análise estratégica do Real Time Journal.'
+    final_html = inject_seo_into_html(raw_html, request.url, title, description)
     return Response(final_html, mimetype='text/html; charset=utf-8')
 
 
@@ -1188,6 +1188,9 @@ def news_page(slug):
                 if original_link in ANALYSIS_BY_FILE:
                     item['analysis_link'] = build_analysis_url(original_link)
             return Response(render_news_page(item, slug), mimetype='text/html; charset=utf-8')
+    fallback_file = os.path.join('noticia', f'{slug}.html')
+    if os.path.exists(fallback_file):
+        return send_from_directory('noticia', f'{slug}.html')
     return send_from_directory('.', 'index.html'), 404
 
 
