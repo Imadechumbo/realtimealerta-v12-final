@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clima - Real Time Journal</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #050505;
+    color: #fff;
+}
+header {
+    padding: 28px 20px;
+    background: #000;
+    border-bottom: 4px solid #dc2626;
+}
+h1 {
+    margin: 0 0 8px;
+    font-size: 34px;
+    text-transform: uppercase;
+}
+p {
+    margin: 0;
+    line-height: 1.7;
+    color: #d1d5db;
+}
+main {
+    padding: 24px;
+}
+.frame-wrap, .panel {
+    background: #111;
+    border: 4px solid #000;
+    box-shadow: 10px 10px 0 #000;
+    padding: 20px;
+}
+.btn {
+    display: inline-block;
+    margin-top: 16px;
+    margin-right: 12px;
+    padding: 14px 18px;
+    background: #dc2626;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+.actions {
+    margin-top: 10px;
+}
+.note {
+    padding: 18px 24px 0;
+    font-size: 12px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+</style>
+    <link rel="stylesheet" href="v6-warroom.css">
+</head>
+<body class="war-room-real">
+<header>
+    <h1>Clima</h1>
+    <p>Radar meteorológico global e camadas de vento, chuva, satélite e previsão.</p>
+</header>
+<main>
+    <div class="frame-wrap">
+        
+        <iframe src="https://embed.windy.com/embed2.html?lat=-15&lon=-55&zoom=3&level=surface&overlay=radar&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=-15&detailLon=-55&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"
+        style="width:100%;height:70vh;border:0;"></iframe>
+        
+    </div>
+    <div class="note">Fonte externa: Windy.</div>
+</main>
+</body>
+</html>

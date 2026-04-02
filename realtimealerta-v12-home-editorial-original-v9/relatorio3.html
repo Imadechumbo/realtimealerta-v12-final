@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Inteligência - Escudos da América - Real Time</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="v6-warroom.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; line-height: 1.8; }
+        .serif { font-family: 'Playfair Display', serif; }
+        header {
+            height: 100px; display: flex; justify-content: center; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,.12); background: #060606;
+        }
+        .site-title-mini { font-size: 32px; font-weight: 900; letter-spacing: -1px; text-decoration: none; }
+        .report-container { max-width: 900px; margin: 60px auto; padding: 0 25px; }
+        h2 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; margin-top: 38px; margin-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.12); padding-bottom: 10px; }
+        p { margin-bottom: 18px; text-align: justify; }
+        ul { margin-bottom: 20px; list-style-type: square; padding-left: 22px; }
+        li { margin-bottom: 10px; }
+        .summary-box { background:linear-gradient(180deg, rgba(70,18,18,.5), rgba(14,10,10,.92)); border-left:4px solid #d73b32; padding: 22px; border-radius: 12px; }
+        .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:24px 0 8px}
+        .metric{padding:16px;border:1px solid rgba(255,255,255,.09);border-radius:14px;background:rgba(255,255,255,.02)}
+        .metric span{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#b9b3a5;margin-bottom:8px}
+        .metric strong{font-size:28px;line-height:1;color:#f5e4b4}
+    </style>
+</head>
+<body class="war-room-real">
+    <header>
+        <a href="index.html" class="site-title-mini serif">Real Time</a>
+    </header>
+
+    <main class="report-container">
+        <div class="defcon-badge">DEFCON WATCH • Defesa Aérea</div>
+        <p class="command-note">Relatório de inteligência OSINT • 23 de março de 2026 • Escudos da América</p>
+        <h1 class="serif text-5xl font-black mb-10 leading-tight">Escudos da América: arquitetura de defesa aérea, antimíssil e alerta antecipado dos Estados Unidos</h1>
+
+        <div class="bg-gray-50 h-24 my-10 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-2xl">
+            <span class="text-gray-400 font-bold uppercase text-[10px] tracking-[3px]">Espaço publicitário / patrocínio tático</span>
+        </div>
+
+        <section class="summary-box">
+            <h3 class="font-black uppercase text-sm mb-2 text-red-600">Resumo Executivo</h3>
+            <p class="font-bold m-0">A malha de defesa dos EUA funciona em camadas: sensores orbitais e terrestres detectam a ameaça, redes de comando processam a informação e sistemas como Patriot, THAAD, Aegis BMD e GMD atuam em diferentes altitudes, alcances e janelas de interceptação. O valor estratégico está menos em um único “escudo” e mais na fusão contínua entre radar, satélite, defesa aérea e comando conjunto.</p>
+        </section>
+
+        <div class="metric-grid">
+            <div class="metric"><span>Camada terminal</span><strong>Patriot</strong></div>
+            <div class="metric"><span>Camada de alta altitude</span><strong>THAAD</strong></div>
+            <div class="metric"><span>Camada naval</span><strong>Aegis BMD</strong></div>
+            <div class="metric"><span>Defesa continental</span><strong>GMD</strong></div>
+        </div>
+
+        <h2>1. Estrutura em camadas</h2>
+        <p>O conceito central do “escudo da América” é a defesa em profundidade. Em cenários regionais, baterias Patriot cobrem ameaças aerodinâmicas e mísseis de curto alcance. Em escalões mais altos, o THAAD amplia a janela de interceptação fora ou no limite superior da atmosfera. No ambiente marítimo, destróieres e cruzadores equipados com Aegis BMD oferecem mobilidade, cobertura expedicionária e defesa de grupos navais. Já a camada continental depende do GMD, pensado para ameaças balísticas de maior alcance contra o território norte-americano.</p>
+
+        <h2>2. Sensores, radares e alerta antecipado</h2>
+        <p>Nenhum interceptador funciona isolado. O desempenho real depende da malha de sensores: satélites de alerta infravermelho, radares de varredura de longo alcance, radares embarcados SPY da arquitetura Aegis e centros de fusão de dados distribuídos entre comandos militares. Em termos OSINT, o valor analítico está em observar exercícios, deslocamentos de baterias, upgrades de radares e integração entre comandos regionais.</p>
+        <ul>
+            <li><strong>Satélites de alerta antecipado:</strong> identificam assinaturas térmicas de lançamentos.</li>
+            <li><strong>Radares estratégicos:</strong> acompanham trajetória e refinam a solução de tiro.</li>
+            <li><strong>Sensores navais:</strong> expandem cobertura sobre áreas marítimas e litorais.</li>
+            <li><strong>Centros C2:</strong> transformam dados dispersos em decisão operacional.</li>
+        </ul>
+
+        <div class="war-room-report">
+            <h3 class="serif">Painel OSINT • Notícias e vetores observáveis</h3>
+            <div class="radar-divider"></div>
+            <div class="war-room-grid">
+                <div class="war-room-cell"><strong>Movimentações</strong> reposicionamento de baterias, exercícios integrados, rotações para aliados e presença naval em regiões sensíveis.</div>
+                <div class="war-room-cell"><strong>Modernização</strong> novos radares, revisão de software, capacidade anti-hipersônica e interoperabilidade entre forças.</div>
+                <div class="war-room-cell"><strong>Parcerias</strong> Japão, Coreia do Sul, Guam, Europa e bases avançadas ampliam o alcance da arquitetura.</div>
+                <div class="war-room-cell"><strong>Sinal estratégico</strong> exercícios públicos e testes são também mensagens de dissuasão.</div>
+            </div>
+        </div>
+
+        <h2>3. Vulnerabilidades e desafios</h2>
+        <p>A saturação continua sendo o principal desafio: enxames de drones, mísseis de cruzeiro voando rente ao terreno e salvas combinadas forçam escolhas de prioridade. Outro risco é a guerra eletrônica, que pode degradar links, navegação e percepção situacional. Em paralelo, ameaças hipersônicas pressionam o tempo de decisão e exigem sensores mais distribuídos, com processamento mais rápido.</p>
+        <ul>
+            <li><strong>Saturação de alvos:</strong> custo de interceptação versus volume de ameaça.</li>
+            <li><strong>Guerra eletrônica:</strong> jamming, spoofing e degradação do quadro tático.</li>
+            <li><strong>Hipervelocidade:</strong> menos tempo entre detecção e engajamento.</li>
+            <li><strong>Cobertura política:</strong> integração depende de alianças e bases adiantadas.</li>
+        </ul>
+
+        <div class="bg-gray-50 h-64 my-10 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-2xl">
+            <span class="text-gray-400 font-bold uppercase text-[10px] tracking-[3px]">Anúncio premium / bloco de afiliado</span>
+        </div>
+
+        <h2>4. Leitura estratégica</h2>
+        <p>O poder do sistema norte-americano não está apenas no hardware, mas na capacidade de combinar sensores globais, defesa aérea regional, defesa marítima e resposta continental sob um mesmo ecossistema de comando. Para monitoramento OSINT, isso significa acompanhar não só armas e plataformas, mas também logística, exercícios multinacionais, contratos industriais e atualizações doutrinárias.</p>
+
+        <div class="bg-black text-white p-8 my-10 rounded-2xl border border-white/10">
+            <h3 class="serif text-2xl mb-4 text-yellow-500">Conclusão</h3>
+            <p class="m-0 italic">“Os escudos da América” formam uma arquitetura viva de dissuasão. Em uma crise real, a vantagem decisiva virá da integração entre alerta antecipado, comando distribuído e capacidade de absorver múltiplos vetores ao mesmo tempo.</p>
+        </div>
+
+        
+        <div class="report-sources">
+            <h3>Fontes-base desta síntese</h3>
+            <ul>
+                <li>Reuters — custo estimado do Golden Dome sobe para US$ 185 bilhões com aceleração de capacidades espaciais, 17 mar. 2026.</li>
+                <li>Missile Defense Agency — material orçamentário FY2026 enquadra a defesa do território no contexto “Golden Dome for America”.</li>
+                <li>NATO — notícia de 5 mar. 2026 sobre capacidade da Aliança de identificar, rastrear e interceptar ameaça balística, como exemplo de defesa integrada em rede.</li>
+            </ul>
+        </div>
+    
+
+        <hr class="border-black border-2 my-10">
+
+        <div class="flex justify-between items-center bg-gray-100 p-6 rounded-2xl gap-4 flex-wrap">
+            <div>
+                <p class="font-black text-sm uppercase m-0">Mais relatórios estratégicos</p>
+                <p class="text-xs text-gray-500 m-0">Volte ao painel para acessar novos cenários OSINT e alertas situacionais.</p>
+            </div>
+            <a href="index.html" class="bg-black text-white px-6 py-3 font-black uppercase text-xs rounded-xl">Voltar ao Painel</a>
+        </div>
+    </main>
+
+    <footer class="bg-black text-white py-12 text-center text-[10px] font-bold uppercase tracking-[3px] mt-16">
+        Real Time Journal © 2026 • War Room Real • Inteligência de Fonte Aberta (OSINT)
+    </footer>
+</body>
+</html>
