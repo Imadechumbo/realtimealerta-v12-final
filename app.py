@@ -489,8 +489,8 @@ def fetch_earthquakes():
 def ai_answer(prompt: str) -> str:
     if not model:
         return (
-            'O analista sênior está ativo em modo heurístico. '
-            'Configure GEMINI_API_KEY para habilitar a análise com Gemini em produção.'
+            'Analista Sênior em modo local de contingência. '
+            'A IA avançada está temporariamente indisponível, mas o terminal segue ativo para leitura heurística do cenário.'
         )
 
     system_prompt = f'''
